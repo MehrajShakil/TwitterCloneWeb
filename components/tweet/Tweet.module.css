@@ -1,0 +1,142 @@
+/* Ported from class 28 index.css (new tweet box + tweet card) */
+
+.newTweet {
+  display: flex;
+  gap: 10px;
+}
+
+.newTweet textarea {
+  flex: 1;
+  border: 1px solid var(--app-line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  resize: none;
+  font-size: 16px;
+  font-family: inherit;
+  height: 50px;
+  background-color: var(--app-input-bg);
+  color: var(--app-text);
+}
+
+.newTweet textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.newTweetFooter {
+  display: flex;
+  align-items: center;
+  margin-left: 55px;
+  border-bottom: 1px solid var(--app-line);
+}
+
+.charCount {
+  font-size: 13px;
+  color: var(--app-muted);
+}
+
+.charCount.warning {
+  color: var(--like);
+  font-weight: bold;
+}
+
+.tweetBtnSmall {
+  margin: 10px 0 20px auto;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--primary);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.tweetBtnSmall:hover:not(:disabled) {
+  background-color: var(--primary-dark);
+}
+
+.tweetBtnSmall:disabled {
+  background-color: var(--primary-light);
+  cursor: not-allowed;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  min-width: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.tweet {
+  display: flex;
+  gap: 10px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--app-line);
+}
+
+.tweetContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.handle {
+  color: var(--app-muted);
+}
+
+.tweetText {
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.tweetImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+.tweetActions {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-top: 10px;
+  color: var(--app-muted);
+  font-size: 14px;
+}
+
+/* action buttons look like plain text, like the <span>s in class 28 */
+.tweetActions button {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tweetActions .liked {
+  color: var(--like);
+  font-weight: bold;
+}
+
+.tweetActions .retweeted {
+  color: var(--retweet);
+  font-weight: bold;
+}
+
+.tweetActions .deleteBtn {
+  margin-left: auto;
+  opacity: 0.5;
+}
+
+.tweetActions .deleteBtn:hover {
+  opacity: 1;
+}

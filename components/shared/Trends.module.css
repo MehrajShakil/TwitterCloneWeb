@@ -1,0 +1,141 @@
+/* Ported from class 28 index.css (trends + who to follow) */
+
+.trends {
+  width: 280px;
+  padding: 20px;
+  flex-shrink: 0;
+}
+
+.trendsCard {
+  background-color: var(--app-card);
+  border-radius: 16px;
+  box-shadow: var(--app-card-shadow);
+  overflow: hidden;
+}
+
+.trendsCard h2 {
+  font-size: 20px;
+  padding: 15px 15px 5px 15px;
+}
+
+.trendItem {
+  display: flex;
+  gap: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-top: 1px solid var(--app-line);
+}
+
+.trendItem:hover {
+  background-color: var(--app-hover);
+}
+
+.trendNumber,
+.trendCategory,
+.trendCount {
+  color: var(--app-muted);
+}
+
+.trendNumber,
+.trendCategory {
+  font-size: 14px;
+}
+
+.trendName {
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+.trendCount {
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.trendMore {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 15px;
+  color: var(--primary);
+  background: none;
+  border: none;
+  border-top: 1px solid var(--app-line);
+  font-size: 16px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.trendMore:hover {
+  background-color: var(--app-hover);
+}
+
+/* ---- who to follow ---- */
+.followCard {
+  margin-top: 20px;
+}
+
+.followItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  border-top: 1px solid var(--app-line);
+}
+
+.followAvatar {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.followText {
+  flex: 1;
+  min-width: 0;
+}
+
+.followText p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.handle {
+  color: var(--app-muted);
+}
+
+.followBtn {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 6px 14px;
+  background: var(--follow-btn-bg);
+  color: var(--follow-btn-text);
+  font-weight: bold;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.followBtn.following {
+  background: transparent;
+  color: inherit;
+  border-color: var(--app-line);
+}
+
+.followMessage {
+  padding: 10px 15px 15px;
+  color: var(--primary);
+}
+
+.followMessage.error {
+  color: var(--like);
+}

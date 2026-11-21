@@ -1,0 +1,129 @@
+/* Ported from class 11 login.css (page layout part). Form styles: components/LoginForm.module.css */
+
+.loginPage {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* left */
+.brandPanel {
+  flex: 1;
+  background-color: var(--primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 80px;
+  color: var(--bg-white);
+}
+
+.brandLogo {
+  font-size: 42px;
+  font-weight: 900;
+  margin-bottom: 40px;
+  letter-spacing: -1px;
+}
+
+.brandTagline {
+  font-size: 52px;
+  font-weight: 900;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.brandSub {
+  font-size: 20px;
+  opacity: 0.9;
+}
+
+/* right */
+.formPanel {
+  width: 480px;
+  min-width: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  background-color: var(--bg-white);
+}
+
+.formCard {
+  width: 100%;
+  max-width: 360px;
+}
+
+.formLogo {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--primary);
+  margin-bottom: 28px;
+}
+
+.formTitle {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin: 24px 0;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background-color: var(--border);
+}
+
+.signupPrompt {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.linkSignup {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* responsive design */
+@media (max-width: 768px) {
+  .loginPage {
+    flex-direction: column;
+  }
+
+  .brandPanel {
+    flex: none;
+    padding: 40px 24px 36px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .brandTagline {
+    font-size: 32px;
+  }
+
+  .brandLogo {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .formPanel {
+    width: 100%;
+    min-width: unset;
+    padding: 32px 20px 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brandPanel {
+    padding: 32px 16px 24px;
+  }
+}

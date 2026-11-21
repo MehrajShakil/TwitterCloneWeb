@@ -1,0 +1,58 @@
+/* Ported from class 28 index.css (feed header, status, search, empty feed) */
+
+.feedHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.feedTitle {
+  font-size: 20px;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.status.online {
+  background: #e3f7ec;
+  color: var(--retweet);
+}
+
+.status.offline {
+  background: #fde8ee;
+  color: var(--like);
+}
+
+.searchInput {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px 16px;
+  border: 1px solid var(--app-line);
+  border-radius: 999px;
+  background-color: var(--app-input-bg);
+  color: var(--app-text);
+  font-family: inherit;
+  font-size: 15px;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.emptyFeed {
+  text-align: center;
+  color: var(--app-muted);
+  padding: 40px 0;
+}

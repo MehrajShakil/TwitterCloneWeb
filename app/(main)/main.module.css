@@ -1,0 +1,31 @@
+/* Ported from class 28 index.css (.page, .feed, .feed-title) */
+
+.page {
+  display: flex;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.feed {
+  flex: 1;
+  min-width: 0;
+  border-left: 1px solid var(--app-line);
+  border-right: 1px solid var(--app-line);
+  padding: 20px;
+}
+
+.feedTitle {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.placeholder {
+  color: var(--app-muted);
+}
+
+/* Small screens: hide the right column */
+@media (max-width: 900px) {
+  .page > aside {
+    display: none;
+  }
+}

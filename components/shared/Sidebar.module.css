@@ -1,0 +1,102 @@
+/* Ported from class 28 index.css (sidebar + theme button) */
+
+.sidebar {
+  width: 220px;
+  padding: 20px;
+  flex-shrink: 0;
+}
+
+.logo {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--app-logo);
+  margin-bottom: 10px;
+}
+
+.navList {
+  list-style: none;
+}
+
+.navItem {
+  display: block;
+  font-size: 18px;
+  padding: 12px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.navItem:hover {
+  background-color: var(--app-hover);
+}
+
+.navItem.active {
+  font-weight: bold;
+  color: var(--primary-dark);
+}
+
+.tweetBtn {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  width: 80%;
+  padding: 12px;
+  border-radius: 20px;
+  background-color: var(--primary);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.tweetBtn:hover {
+  background-color: var(--primary-dark);
+}
+
+.themeBtn {
+  margin-top: 12px;
+  width: 80%;
+  padding: 10px;
+  border: 1px solid var(--app-line);
+  border-radius: 20px;
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.themeBtn:hover {
+  background-color: var(--app-hover);
+}
+
+.logout {
+  display: block;
+  margin-top: 16px;
+  padding: 0 10px;
+  font-size: 14px;
+  color: var(--app-muted);
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.logout:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    width: 140px;
+    padding: 12px;
+  }
+
+  .navItem {
+    font-size: 15px;
+  }
+
+  .tweetBtn,
+  .themeBtn {
+    width: 100%;
+  }
+}

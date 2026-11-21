@@ -1,0 +1,64 @@
+.pageTitle {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.card {
+  border: 1px solid var(--app-line);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+  scroll-margin-top: 20px; /* nicer jump for /settings#password */
+}
+
+.cardTitle {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+/* avatar picker */
+.avatarPicker {
+  border: none;
+  margin-bottom: 16px;
+}
+
+.avatarPicker legend {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--app-muted);
+  margin-bottom: 8px;
+}
+
+.avatarOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.avatarOption {
+  position: relative;
+  border-radius: 50%;
+  padding: 3px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.avatarOption input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.avatarOption:hover {
+  border-color: var(--app-line);
+}
+
+.avatarOption.selected {
+  border-color: var(--primary);
+}
+
+.avatarOption:has(input:focus-visible) {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}

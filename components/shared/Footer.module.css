@@ -1,0 +1,6 @@
+.siteFooter {
+  text-align: center;
+  padding: 20px;
+  color: var(--app-muted);
+  font-size: 14px;
+}

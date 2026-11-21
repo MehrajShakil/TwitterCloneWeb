@@ -1,0 +1,175 @@
+/* Shared form styles: sign in, sign up and settings.
+   Uses the --app-* variables, so it also follows the dark theme on /settings.
+   (Started from class 11 login.css.) */
+
+.inputGroup {
+  margin-bottom: 16px;
+}
+
+.inputGroup label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--app-muted);
+  margin-bottom: 4px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-family: inherit;
+  border: 1px solid var(--app-line);
+  border-radius: 8px;
+  background-color: var(--app-input-bg);
+  color: var(--app-text);
+  transition:
+    border-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+  outline: none;
+}
+
+textarea.input {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(29, 161, 242, 0.2);
+}
+
+.input.invalid {
+  border-color: var(--error);
+}
+
+.input.valid {
+  border-color: var(--success);
+}
+
+.input.valid:focus {
+  box-shadow: 0 0 0 3px rgba(23, 191, 99, 0.25);
+}
+
+/* password rules checklist */
+.checklist {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--app-muted);
+}
+
+.checklist li {
+  transition: color 0.2s ease-in-out;
+}
+
+.checklist li.met {
+  color: var(--success-text); /* no bold: keeps the line from re-wrapping while typing */
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.input.invalid:focus {
+  box-shadow: 0 0 0 3px rgba(244, 33, 46, 0.2);
+}
+
+.passwordWrapper {
+  position: relative;
+}
+
+.passwordWrapper .input {
+  padding-right: 70px;
+}
+
+.togglePassword {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--app-muted);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.togglePassword:hover {
+  color: var(--app-text);
+}
+
+.fieldFooter {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 4px;
+  min-height: 16px;
+}
+
+.errorMsg {
+  font-size: 12px;
+  color: var(--error);
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--app-muted);
+  margin-left: auto;
+}
+
+/* banner for errors that don't belong to one field ("wrong password") */
+.formError,
+.formSuccess {
+  font-size: 14px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.formError {
+  background: #fde8ee;
+  color: var(--error);
+}
+
+.formSuccess {
+  background: #e3f7ec;
+  color: #0b7a3e;
+}
+
+.btnPrimary {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  border: none;
+  border-radius: 99999px;
+  background-color: var(--follow-btn-bg);
+  color: var(--follow-btn-text);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease-in-out,
+    opacity 0.2s ease-in-out;
+  margin-top: 8px;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background-color: var(--primary-dark);
+  color: #fff;
+}
+
+.btnPrimary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
