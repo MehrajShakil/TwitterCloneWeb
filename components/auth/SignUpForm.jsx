@@ -19,7 +19,14 @@ export default function SignUpForm() {
   } = useForm({
     resolver: zodResolver(signUpSchema),
     mode: "onTouched",
-    defaultValues: { name: "", username: "", email: "", password: "", confirmPassword: "" },
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
   });
 
   // live value -> drives the green ✓ checklist under the password field
@@ -29,7 +36,11 @@ export default function SignUpForm() {
     const result = await signUp(values);
     if (result.error) {
       // "email already exists" / "username taken" -> show it under that field
-      setError(result.field ?? "root", { message: result.error }, { shouldFocus: true });
+      setError(
+        result.field ?? "root",
+        { message: result.error },
+        { shouldFocus: true },
+      );
       return;
     }
     // account created -> go and sign in. The username in the URL lets /login
@@ -42,12 +53,18 @@ export default function SignUpForm() {
       <FormMessage>{errors.root?.message}</FormMessage>
 
       <TextField
-        id="name"
-        label="Name"
-        placeholder="Your full name"
-        autoComplete="name"
-        error={errors.name}
-        {...register("name")}
+        id="firstName"
+        label="First name"
+        autoComplete="given-name"
+        error={errors.firstName}
+        {...register("firstName")}
+      />
+      <TextField
+        id="lastName"
+        label="Last name"
+        autoComplete="family-name"
+        error={errors.lastName}
+        {...register("lastName")}
       />
       <TextField
         id="username"

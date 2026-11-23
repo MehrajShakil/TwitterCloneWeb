@@ -45,30 +45,32 @@ const strongPassword = PASSWORD_RULES.reduce(
 
 // ---- form schemas ----
 export const signInSchema = z.object({
-  identifier: z.string().trim().min(1, "Email or username is required."),
+  email: z.string().trim().min(1, "Email or username is required."),
   password: z.string().min(1, "Password is required."),
 });
 
 export const signUpSchema = z
   .object({
-    name,
+    firstName: name,
+    lastName: name,
     username,
     email,
     password: strongPassword,
     confirmPassword: z.string().min(1, "Please confirm your password."),
   })
-  // cross-field rule: the error is shown under "confirmPassword"
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match.",
     path: ["confirmPassword"],
   });
 
 export const profileSchema = z.object({
-  name,
+  firstName: name,
+  lastName: name,
   username,
   bio: z.string().trim().max(160, "Bio must be at most 160 characters."),
-  avatar: z.enum(["", ...avatarOptions]), // "" = use initials
+  avatar: z.enum(["", ...avatarOptions]),
 });
+
 
 export const passwordSchema = z
   .object({

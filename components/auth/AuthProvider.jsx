@@ -1,114 +1,101 @@
 "use client";
 
-// Same idea as ThemeProvider: one context that the whole app can read with useAuth().
-// It lives in the ROOT layout so both (auth) and (main) pages can use it.
+// Auth state for the whole app, backed by the API.
+// The session (token + user) is cached in localStorage so a reload keeps you signed in.
 import { createContext, useContext, useEffect, useState } from "react";
-import * as storage from "@/services/authStorage";
+import { api, getAuth, setAuth, clearAuth, toUser, toFormError, AUTH_KEY } from "@/services/api";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [users, setUsers] = useState([]);
-  const [session, setSession] = useState(null);
-  // true until we have read localStorage in the browser (the server can't)
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     function load() {
-      setUsers(storage.getUsers());
-      setSession(storage.getSession());
+      const auth = getAuth();
+      const valid = Boolean(auth) && new Date(auth.expiryAt) > new Date();
+      if (!valid) clearAuth();
+      setUser(valid ? auth.user : null);
       setLoading(false);
     }
-    load(); // read browser-only storage after mount
+    load();
 
-    // another tab signed in / out or edited a profile -> stay in sync
+    // another tab signed in/out, or api() saw a 401
     function handleStorage(e) {
-      if (e.key === null || e.key === storage.USERS_KEY || e.key === storage.SESSION_KEY) load();
+      if (e.key === null || e.key === AUTH_KEY) load();
     }
     window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
+    window.addEventListener("auth-expired", load);
+    return () => {
+      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener("auth-expired", load);
+    };
   }, []);
 
-  const user = users.find((u) => u.id === session?.userId) ?? null;
-
-  function commitUsers(next) {
-    storage.saveUsers(next);
-    setUsers(next);
+  function saveUser(next) {
+    setAuth({ ...getAuth(), user: next });
+    setUser(next);
   }
 
-  function startSession(userId) {
-    storage.setSession(userId);
-    setSession({ userId });
+  async function signUp({ firstName, lastName, username, email, password }) {
+    try {
+      await api("/api/users", {
+        method: "POST",
+        body: { firstName, lastName, username, email, password },
+      });
+      return {}; // the user signs in themselves on /login
+    } catch (err) {
+      return toFormError(err);
+    }
   }
 
-  // Every action returns {} on success or { error, field? } on failure,
-  // so forms can show the message with React Hook Form's setError().
-
-  async function signUp({ name, username, email, password }) {
-    const all = storage.getUsers(); // read fresh, in case another tab changed it
-    if (all.some((u) => u.email === email)) {
-      return { field: "email", error: "An account with this email already exists." };
+  async function signIn({ email, password }) {
+    try {
+      const res = await api("/api/auth/login", { method: "POST", body: { email, password } });
+      const nextUser = toUser(res.userDto);
+      setAuth({ accessToken: res.accessToken, expiryAt: res.expiryAt, user: nextUser });
+      setUser(nextUser);
+      return {};
+    } catch (err) {
+      // same message for both cases - don't reveal which accounts exist
+      return { error: err.status === 401 ? "Wrong email or password." : err.message };
     }
-    if (all.some((u) => u.username.toLowerCase() === username.toLowerCase())) {
-      return { field: "username", error: "This username is already taken." };
-    }
-
-    const newUser = {
-      id: storage.createId(),
-      name,
-      username,
-      email,
-      passwordHash: await storage.hashPassword(password),
-      avatar: "", // "" -> show initials
-      bio: "",
-      createdAt: new Date().toISOString(),
-    };
-    commitUsers([...all, newUser]);
-    // no startSession() here - the user signs in themselves on /login
-    return {};
-  }
-
-  async function signIn({ identifier, password }) {
-    const found = storage.findUserByIdentifier(storage.getUsers(), identifier);
-    const hash = await storage.hashPassword(password);
-    // same message for both cases - don't reveal which accounts exist
-    if (!found || found.passwordHash !== hash) {
-      return { error: "Wrong email/username or password." };
-    }
-    startSession(found.id);
-    return {};
   }
 
   function signOut() {
-    storage.clearSession();
-    setSession(null);
+    clearAuth();
+    setUser(null);
   }
 
-  function updateProfile({ name, username, bio, avatar }) {
-    const all = storage.getUsers();
-    const taken = all.some(
-      (u) => u.id !== user.id && u.username.toLowerCase() === username.toLowerCase(),
-    );
-    if (taken) return { field: "username", error: "This username is already taken." };
-
-    commitUsers(all.map((u) => (u.id === user.id ? { ...u, name, username, bio, avatar } : u)));
-    return {};
+  async function updateProfile({ firstName, lastName, username, bio, avatar }) {
+    try {
+      const dto = await api(`/api/users/${user.id}`, {
+        method: "PUT",
+        body: { firstName, lastName, username, bio, avatarUrl: avatar },
+      });
+      saveUser(toUser(dto));
+      return {};
+    } catch (err) {
+      return toFormError(err);
+    }
   }
 
   async function changePassword({ currentPassword, newPassword }) {
-    const all = storage.getUsers();
-    const me = all.find((u) => u.id === user.id);
-    if (me.passwordHash !== (await storage.hashPassword(currentPassword))) {
-      return { field: "currentPassword", error: "Current password is incorrect." };
+    try {
+      await api("/api/auth/change-password", {
+        method: "POST",
+        body: { currentPassword, newPassword },
+      });
+      return {};
+    } catch (err) {
+      return toFormError(err);
     }
-    const passwordHash = await storage.hashPassword(newPassword);
-    commitUsers(all.map((u) => (u.id === user.id ? { ...u, passwordHash } : u)));
-    return {};
   }
 
   return (
     <AuthContext.Provider
-      value={{ user, users, loading, signUp, signIn, signOut, updateProfile, changePassword }}
+      value={{ user, loading, signUp, signIn, signOut, updateProfile, changePassword }}
     >
       {children}
     </AuthContext.Provider>
