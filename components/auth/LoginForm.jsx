@@ -22,7 +22,7 @@ export default function LoginForm({ registeredUsername = "" }) {
   } = useForm({
     resolver: zodResolver(signInSchema),
     mode: "onTouched",
-    defaultValues: { identifier: registeredUsername, password: "" },
+    defaultValues: { email: registeredUsername, password: "" },
   });
 
   // only runs when the Zod schema passes
@@ -39,16 +39,18 @@ export default function LoginForm({ registeredUsername = "" }) {
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <FormMessage>{errors.root?.message}</FormMessage>
       {registeredUsername && !errors.root && (
-        <FormMessage type="success">Account created 🎉 Sign in to continue.</FormMessage>
+        <FormMessage type="success">
+          Account created 🎉 Sign in to continue.
+        </FormMessage>
       )}
 
       <TextField
-        id="identifier"
-        label="Email or username"
-        placeholder="Email or username"
-        autoComplete="username"
-        error={errors.identifier}
-        {...register("identifier")}
+        id="email"
+        label="Email"
+        placeholder="Email"
+        autoComplete="email"
+        error={errors.email}
+        {...register("email")}
       />
 
       <PasswordField
@@ -60,7 +62,9 @@ export default function LoginForm({ registeredUsername = "" }) {
         {...register("password")}
       />
 
-      <SubmitButton disabled={isSubmitting}>{isSubmitting ? "Signing in..." : "Sign in"}</SubmitButton>
+      <SubmitButton disabled={isSubmitting}>
+        {isSubmitting ? "Signing in..." : "Sign in"}
+      </SubmitButton>
     </form>
   );
 }
